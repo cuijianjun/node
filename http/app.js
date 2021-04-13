@@ -9,7 +9,7 @@ http.createServer(function(req,res){
 	// res.writeHead(200,{'Content-Type':'text/html'});
 	// res.write('<h1>Node.js</h1>');
 	// res.end('<p>PACT</p>');
-	const {url, method} = request;
+	const {url, method, headers} = request;
 	if (url === "/" && method === "GET") {
 		fs.readFile('index.txt', (err, data) => {
 			if (err) {
@@ -24,7 +24,11 @@ http.createServer(function(req,res){
 	} else if (url === 'users' && method === 'GET') {
 		res.writeHead(200, {"Content-Type": "application/json"});
 		res.end(JSON.stringify({name: "TOM"}));
-	} else {
+	} else if (method === 'GET' && headers.accept.indexOf('image/*') !== -1) {
+		// url = /a.png => ./a.png
+		fs.createWriteStream('.' + url).pipe(res)
+	}
+	else {
 		res.statusCode = 404
 		res.setHeader('Content-Type','text/html');
 		res.end('404 page')
