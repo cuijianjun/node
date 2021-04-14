@@ -2,11 +2,12 @@ const express = require('express')
 const app = express()
 
 app.get('/',function(req,res){
+    debugger
     res.send(`
             <div>
                 <div id="app">
                     <h1>开课吧</h1>
-                    <p class="demo">开课吧还不错</p>
+                    <p class="demo">开课吧dddd还不错</p>
                 </div>
             </body>
     `)
